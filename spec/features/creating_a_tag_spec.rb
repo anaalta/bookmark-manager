@@ -1,10 +1,12 @@
-feature "creates a tag" do
+feature "Creating tags" do
   scenario "user tags a link" do
     visit ('/links/new')
     fill_in :title, with: 'Google'
     fill_in :url, with:  'https://www.google.co.uk/'
-    fill_in :tag, with: 'Ask anything'
+    fill_in :tags, with: 'anything'
+
     click_button 'Submit'
-    expect(page).to have_content('Tag: Ask anything')
+    link = Link.first
+    expect(link.tags.map(&:name)).to include('anything')
   end
 end
