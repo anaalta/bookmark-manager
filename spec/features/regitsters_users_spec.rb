@@ -7,6 +7,6 @@ feature 'Registers users' do
     click_button 'Submit'
     expect(current_path).to eq '/links'
     expect(page).to have_content('Welcome to your bookmark manager, Ana@something.com!')
-    expect{user.increment}.to change{user.count}.by(1)
+    expect{User.create}.to change{User.last.id}.by(1)
   end
 end
