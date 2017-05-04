@@ -6,6 +6,12 @@ require_relative 'data_mapper_setup'
 class Bookmark < Sinatra::Base
 enable :sessions
 
+  helpers do
+    def current_user
+      User.find(session[:email])
+    end
+  end
+
   get '/links' do
     @links = Link.all
     @email = session[:email]
