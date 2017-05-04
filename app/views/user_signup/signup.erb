@@ -1,5 +1,7 @@
-
-<form action = '/' method = 'post'>
+<% if flash[:password_error] %>
+  <div id='notice'><%= flash[:password_error]%></div>
+<% end %>
+<form action = '/signup' method = 'post'>
   Please insert your email:
   <input type = 'text' name = 'email'>
   Please insert your password:
