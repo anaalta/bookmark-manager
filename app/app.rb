@@ -4,17 +4,17 @@ require 'sinatra/base'
 require_relative 'data_mapper_setup'
 
 class Bookmark < Sinatra::Base
-enable :sessions
+  enable :sessions
+  set :session_secret, 'super secret'
 
   helpers do
     def current_user
-      User.find(session[:email])
+      @current_user ||= User.get(session[:user_id])
     end
   end
 
   get '/links' do
     @links = Link.all
-    @email = session[:email]
     erb(:'links/index')
   end
 
@@ -43,8 +43,7 @@ enable :sessions
 
   post '/' do
     user = User.create(email: params[:email], password: params[:password])
-    session[:email] = user.email
-    session[:password] = user.password
+    session[:user_id] = user.id
     redirect to('/links')
   end
 
